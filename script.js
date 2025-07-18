@@ -29,3 +29,35 @@ filterButtons.forEach(btn => {
     });
   });
 });
+
+// Welcome popup logic
+window.addEventListener('DOMContentLoaded', function () {
+  const popup = document.getElementById('welcome-popup');
+  const closeBtn = document.getElementById('close-popup');
+  if (popup && closeBtn) {
+    closeBtn.addEventListener('click', function () {
+      popup.style.display = 'none';
+    });
+  }
+});
+
+// Smooth animated color for welcome popup (text, image border, button)
+window.addEventListener('DOMContentLoaded', function () {
+  const msg = document.querySelector('.welcome-message');
+  const img = document.querySelector('.welcome-img');
+  const btn = document.querySelector('.welcome-btn');
+  if (!msg || !img || !btn) return;
+
+  let hue = 0;
+  function animateColor() {
+    hue = (hue + 0.2) % 360;
+    const color = `hsl(${hue}, 95%, 55%)`;
+    msg.style.color = color;
+    img.style.borderColor = color;
+    btn.style.background = color;
+    btn.style.borderColor = color;
+    btn.style.color = '#111';
+    requestAnimationFrame(animateColor);
+  }
+  animateColor();
+});
