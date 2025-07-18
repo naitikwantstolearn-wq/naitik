@@ -8,46 +8,97 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&family=Poppins&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
     <!-- Tailwind CSS (compiled or CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="index.css" />
+   <script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          inter: ['Inter', 'sans-serif'],
+          poppins: ['Poppins', 'sans-serif'],
+          space: ['Space Grotesk', 'sans-serif'],
+        },
+        colors: {
+          'rich-black': 'hsl(0, 0%, 4%)',
+          'dark-gray': 'hsl(0, 0%, 10%)',
+          'light-gray': 'hsl(0, 0%, 69%)',
+        },
+      },
+    },
+  };
+</script>
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
+
   </head>
+  <style>
+    #fluid-bg {
+      position: relative;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+      display: block;
+    }
+    html, body {
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+  </style>
+  <script>
+  const filterButtons = document.querySelectorAll('[data-filter]');
+  const projects = document.querySelectorAll('[data-category]');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const category = button.getAttribute('data-filter');
+
+      projects.forEach(project => {
+        const projectCategory = project.getAttribute('data-category');
+        if (category === 'all' || projectCategory === category) {
+          project.classList.remove('hidden');
+        } else {
+          project.classList.add('hidden');
+        }
+      });
+
+      // Optional: style active button
+      filterButtons.forEach(btn => btn.classList.remove('bg-pink-500', 'text-white'));
+      button.classList.add('bg-pink-500', 'text-white');
+    });
+  });
+</script>
 
   <body class="bg-black text-white font-poppins">
     
 
     <!-- Header -->
-    <header class="w-full border-b border-zinc-800 bg-black sticky top-0 z-40">
-      <div class="max-w-7xl mx-auto flex items-center justify-between p-4">
-        <div class="text-2xl font-bold text-green-300">Naitik</div>
-        <!-- Desktop Nav -->
-        <nav class="hidden md:flex space-x-6 font-medium">
-          <a href="#home" class="hover:underline">Home</a>
-          <a href="#about" class="hover:underline">About</a>
-          <a href="#portfolio" class="hover:underline">Portfolio</a>
-          <a href="#experience" class="hover:underline">Experience</a>
-          <a href="#education" class="hover:underline">Education</a>
-          <a href="#interests" class="hover:underline">Interests</a>
-          <a href="#blog" class="hover:underline">Blog</a>
-        </nav>
-        <!-- Mobile Hamburger -->
-        <button id="nav-toggle" class="md:hidden flex flex-col justify-center items-center w-10 h-10" aria-label="Open navigation">
-          <span class="block w-7 h-0.5 bg-green-300 mb-1.5"></span>
-          <span class="block w-7 h-0.5 bg-green-300 mb-1.5"></span>
-          <span class="block w-7 h-0.5 bg-green-300"></span>
-        </button>
-      </div>
-      <!-- Mobile Nav -->
-      <nav id="nav-menu" class="md:hidden fixed top-0 right-0 h-full w-4/5 max-w-xs bg-black border-l border-zinc-800 flex flex-col space-y-8 p-8 z-30 transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto max-h-screen">
-        <a href="#home" class="hover:underline">Home</a>
-        <a href="#about" class="hover:underline">About</a>
-        <a href="#portfolio" class="hover:underline">Portfolio</a>
-        <a href="#experience" class="hover:underline">Experience</a>
-        <a href="#education" class="hover:underline">Education</a>
-        <a href="#interests" class="hover:underline">Interests</a>
-        <a href="#blog" class="hover:underline">Blog</a>
+    <header class="flex justify-between items-center p-4 border-b border-zinc-800 relative">
+      <h1 class="text-2xl font-bold text-green-300 z-20">Naitik</h1>
+      <!-- Hamburger Button -->
+      <button id="nav-toggle" class="md:hidden flex flex-col justify-center items-center w-10 h-10 z-20" aria-label="Open navigation">
+        <span class="block w-7 h-0.5 bg-green-300 mb-1.5 transition-all"></span>
+        <span class="block w-7 h-0.5 bg-green-300 mb-1.5 transition-all"></span>
+        <span class="block w-7 h-0.5 bg-green-300 transition-all"></span>
+      </button>
+      <!-- Nav Links -->
+      <nav id="nav-menu" class="fixed md:static top-0 right-0 h-full w-2/3 max-w-xs bg-black md:bg-transparent border-l border-zinc-800 md:border-0 flex flex-col md:flex-row md:items-center md:space-x-6 space-y-8 md:space-y-0 p-8 md:p-0 z-10 transform translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+        <a href="#home" class="hover:underline block md:inline">Home</a>
+        <a href="#about" class="hover:underline block md:inline">About</a>
+        <a href="#portfolio" class="hover:underline block md:inline">Portfolio</a>
+        <a href="#experience" class="hover:underline block md:inline">Experience</a>
+        <a href="#education" class="hover:underline block md:inline">Education</a>
+        <a href="#interests" class="hover:underline block md:inline">Interests</a>
+        <a href="#blog" class="hover:underline block md:inline">Blog</a>
       </nav>
+      <!-- Overlay for mobile nav -->
+      <!-- <div id="nav-overlay" class="fixed inset-0 bg-black bg-opacity-60 z-10 hidden md:hidden"></div> -->
     </header>
 
     <!-- Hero -->
@@ -233,6 +284,130 @@
       </svg>
     </button>
 
-    <script src="script.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const canvas = document.getElementById('fluid-bg');
+      if (!canvas) {
+        console.log('Canvas not found!');
+        return;
+      }
+      const ctx = canvas.getContext('2d');
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+      }
+      window.addEventListener('resize', resize);
+
+      // Test draw: draw a red circle in the center for debugging
+      ctx.clearRect(0, 0, width, height);
+      ctx.beginPath();
+      ctx.arc(width/2, height/2, 50, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,0,0,0.5)';
+      ctx.fill();
+
+      // Blob parameters
+      const blobs = [
+        { x: 0.3, y: 0.4, r: 220, c: 'rgba(168,85,247,0.18)', dx: 0.12, dy: 0.09 }, // purple
+        { x: 0.7, y: 0.6, r: 180, c: 'rgba(236,72,153,0.15)', dx: -0.09, dy: 0.11 }, // pink
+        { x: 0.5, y: 0.3, r: 140, c: 'rgba(34,197,94,0.13)', dx: 0.07, dy: -0.08 }, // green
+        { x: 0.6, y: 0.8, r: 160, c: 'rgba(59,130,246,0.10)', dx: -0.08, dy: 0.07 }, // blue
+      ];
+
+      function animateBlobs(t) {
+        ctx.clearRect(0, 0, width, height);
+        blobs.forEach((blob, i) => {
+          // Animate position with sine/cosine for smoothness
+          const angle = t * 0.0002 + i;
+          const x = width * (blob.x + Math.sin(angle * blob.dx) * 0.08);
+          const y = height * (blob.y + Math.cos(angle * blob.dy) * 0.08);
+          const r = blob.r + Math.sin(angle * 0.7) * 18;
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+          ctx.fillStyle = blob.c;
+          ctx.filter = 'blur(32px)';
+          ctx.fill();
+          ctx.filter = 'none';
+        });
+      }
+
+      // Animation loop
+      let start = null;
+      function step(ts) {
+        if (!start) start = ts;
+        animateBlobs(ts - start);
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+
+    // Floating Scroll-to-Top Button Logic
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    const homeSection = document.getElementById('home');
+    function checkScroll() {
+      const homeBottom = homeSection.offsetTop + homeSection.offsetHeight;
+      if (window.scrollY > homeBottom - 80) {
+        scrollToTopBtn.classList.add('opacity-100');
+        scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+      } else {
+        scrollToTopBtn.classList.remove('opacity-100');
+        scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+      }
+    }
+    window.addEventListener('scroll', checkScroll);
+    // Initial check
+    checkScroll();
+    scrollToTopBtn.addEventListener('click', function() {
+      homeSection.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Mobile Navbar Toggle
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    const navOverlay = document.getElementById('nav-overlay');
+    const navLinks = navMenu.querySelectorAll('a');
+    function openNav() {
+      navMenu.classList.remove('translate-x-full');
+      navOverlay.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+    function closeNav() {
+      navMenu.classList.add('translate-x-full');
+      navOverlay.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+    navToggle.addEventListener('click', openNav);
+    navOverlay.addEventListener('click', closeNav);
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').replace('#', '');
+        const target = document.getElementById(targetId);
+        const isMobile = window.innerWidth < 768;
+        if (isMobile) {
+          closeNav();
+          if (target) {
+            setTimeout(() => {
+              target.scrollIntoView({ behavior: 'smooth' });
+            }, 300); // Wait for menu to close
+          }
+        } else {
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+    // On resize, close nav if switching to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) closeNav();
+    });
+    </script>
   </body>
 </html>
